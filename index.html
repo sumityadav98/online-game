@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cricket Batting Master</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Game Container -->
+    <div id="game-container">
+      <!-- Background Elements -->
+      <div class="stadium-bg">
+        <div class="crowd"></div>
+        <div class="field"></div>
+      </div>
+
+      <!-- Mock SMS Notification -->
+      <div id="sms-notification" class="sms-notification">
+        <div class="sms-header">💬 Messages &bull; Now</div>
+        <div class="sms-body">Your CricketMaster OTP is: <span id="sms-otp-value"></span></div>
+      </div>
+
+      <!-- Login Screen -->
+      <div id="login-screen" class="screen active" style="z-index: 100;">
+        <div class="logo-container">
+          <h1 class="game-title">CRICKET<span class="highlight">MASTER</span></h1>
+        </div>
+        <div class="mode-selection" style="max-width: 400px; text-align: center; background: var(--bg-overlay); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,215,0,0.2);">
+          <div id="phone-section">
+            <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Login to Play</h2>
+            <input type="tel" id="phone-input" class="login-input" placeholder="Enter Phone Number (10 digits)" maxlength="10">
+            <button id="btn-send-otp" class="play-button" style="padding: 15px 40px; font-size: 1rem; width: 100%;">SEND OTP</button>
+          </div>
+          <div id="otp-section" style="display: none;">
+            <h2 style="font-size: 1.5rem;">Enter OTP</h2>
+            <p class="mode-desc" style="margin-bottom: 20px;">OTP sent to <span id="display-phone" style="color: var(--accent-color); font-weight: bold;"></span></p>
+            <input type="text" id="otp-input" class="login-input" placeholder="Enter 4-digit OTP" maxlength="4">
+            <button id="btn-verify-otp" class="play-button" style="padding: 15px 40px; font-size: 1rem; width: 100%;">VERIFY & PLAY</button>
+            <p id="btn-back-phone" style="color: var(--text-muted); margin-top: 15px; cursor: pointer; font-size: 0.8rem; text-decoration: underline;">Change Phone Number</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start Screen -->
+      <div id="start-screen" class="screen">
+        <div class="logo-container">
+          <h1 class="game-title">
+            CRICKET<span class="highlight">MASTER</span>
+          </h1>
+          <p class="tagline">Timing is Everything</p>
+        </div>
+
+        <div class="mode-selection">
+          <h2>Select Game Mode</h2>
+          <div class="mode-buttons">
+            <button class="mode-btn" data-mode="practice">
+              <span class="mode-icon">🏏</span>
+              <span class="mode-name">Practice</span>
+              <span class="mode-desc"
+                >Unlimited balls, perfect your timing</span
+              >
+            </button>
+            <button class="mode-btn" data-mode="match">
+              <span class="mode-icon">🏆</span>
+              <span class="mode-name">Match Mode</span>
+              <span class="mode-desc"
+                >Limited overs, score as many runs as you can</span
+              >
+            </button>
+          </div>
+        </div>
+
+        <div id="team-selection" class="team-selection" style="display: none">
+          <h2>Select Your Team</h2>
+          <div class="team-buttons" id="player-teams">
+            <button class="team-btn" data-team="CSK">CSK</button>
+            <button class="team-btn" data-team="MI">MI</button>
+            <button class="team-btn" data-team="RCB">RCB</button>
+            <button class="team-btn" data-team="KKR">KKR</button>
+            <button class="team-btn" data-team="RR">RR</button>
+            <button class="team-btn" data-team="DC">DC</button>
+            <button class="team-btn" data-team="PBKS">PBKS</button>
+            <button class="team-btn" data-team="SRH">SRH</button>
+            <button class="team-btn" data-team="LSG">LSG</button>
+            <button class="team-btn" data-team="GT">GT</button>
+          </div>
+          <h2>Select Opponent</h2>
+          <div class="team-buttons" id="opponent-teams">
+            <button class="team-btn" data-team="CSK">CSK</button>
+            <button class="team-btn" data-team="MI">MI</button>
+            <button class="team-btn" data-team="RCB">RCB</button>
+            <button class="team-btn" data-team="KKR">KKR</button>
+            <button class="team-btn" data-team="RR">RR</button>
+            <button class="team-btn" data-team="DC">DC</button>
+            <button class="team-btn" data-team="PBKS">PBKS</button>
+            <button class="team-btn" data-team="SRH">SRH</button>
+            <button class="team-btn" data-team="LSG">LSG</button>
+            <button class="team-btn" data-team="GT">GT</button>
+          </div>
+        </div>
+
+        <div
+          id="over-selection"
+          class="difficulty-selection"
+          style="display: none"
+        >
+          <h2>Select Overs</h2>
+          <div class="difficulty-buttons">
+            <button class="over-btn diff-btn" data-overs="1">1 Over</button>
+            <button class="over-btn diff-btn" data-overs="2">2 Overs</button>
+            <button class="over-btn diff-btn" data-overs="5">5 Overs</button>
+          </div>
+        </div>
+
+        <div class="difficulty-selection">
+          <h2>Select Difficulty</h2>
+          <div class="difficulty-buttons">
+            <button class="diff-btn" data-diff="easy">Easy</button>
+            <button class="diff-btn" data-diff="medium">Medium</button>
+            <button class="diff-btn" data-diff="hard">Hard</button>
+          </div>
+        </div>
+
+        <!-- Toss Screen -->
+        <div id="toss-screen" class="screen">
+          <h2 class="game-title" style="font-size: 3rem">COIN TOSS</h2>
+          <div
+            id="toss-matchup"
+            class="tagline"
+            style="
+              margin-bottom: 30px;
+              font-size: 1.5rem;
+              color: var(--text-light);
+            "
+          ></div>
+          <div id="coin" class="coin"></div>
+          <div
+            id="toss-controls"
+            class="action-buttons"
+            style="margin-top: 40px"
+          >
+            <button class="action-btn primary" id="btn-heads">HEADS</button>
+            <button class="action-btn secondary" id="btn-tails">TAILS</button>
+          </div>
+          <div
+            id="toss-result"
+            style="
+              margin-top: 30px;
+              font-size: 1.8rem;
+              color: var(--accent-color);
+              font-family: var(--font-display);
+              text-align: center;
+              display: none;
+            "
+          ></div>
+          <button
+            id="btn-continue-roster"
+            class="action-btn primary"
+            style="margin-top: 30px; display: none"
+          >
+            CONTINUE
+          </button>
+        </div>
+
+        <!-- Roster Screen -->
+        <div id="roster-screen" class="screen">
+          <h2 class="game-title" style="font-size: 2.5rem">SELECT BATSMAN</h2>
+          <p class="tagline" style="margin-bottom: 30px">
+            Choose your opening batsman
+          </p>
+          <div
+            class="team-buttons"
+            id="roster-buttons"
+            style="
+              max-width: 600px;
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              gap: 15px;
+            "
+          >
+            <!-- Buttons added via JS -->
+          </div>
+          <button
+            id="btn-start-match"
+            class="play-button"
+            disabled
+            style="margin-top: 40px"
+          >
+            START MATCH
+          </button>
+        </div>
+
+        <button id="play-btn" class="play-button" disabled>PLAY NOW</button>
+
+        <div class="controls-info">
+          <h3>Controls</h3>
+          <div class="controls-grid">
+            <div class="control-item">
+              <kbd>SPACE</kbd> <span>Standard Shot</span>
+            </div>
+            <div class="control-item">
+              <kbd>A</kbd> <span>Loft Shot (6)</span>
+            </div>
+            <div class="control-item">
+              <kbd>S</kbd> <span>Defensive Shot</span>
+            </div>
+            <div class="control-item">
+              <kbd>D</kbd> <span>Drive Shot (4)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="game-screen" class="screen">
+        <!-- HUD -->
+        <div class="hud">
+          <div class="hud-left">
+            <div class="stat-box" style="min-width: 120px">
+              <span class="stat-label">BATSMAN</span>
+              <span
+                id="current-batsman"
+                class="stat-value"
+                style="font-size: 1.1rem; color: var(--text-light)"
+                >Player</span
+              >
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">SCORE</span>
+              <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">BALLS</span>
+              <span id="balls" class="stat-value">0</span>
+            </div>
+          </div>
+          <div class="hud-center">
+            <div
+              id="matchup-display"
+              style="
+                text-align: center;
+                font-family: var(--font-display);
+                color: var(--accent-color);
+                font-size: 1.2rem;
+                margin-bottom: 5px;
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+                display: none;
+              "
+            ></div>
+            <div id="timing-meter" class="timing-meter">
+              <div class="meter-bar">
+                <div class="perfect-zone"></div>
+                <div class="good-zone"></div>
+                <div class="indicator"></div>
+              </div>
+              <span class="meter-label">TIMING</span>
+            </div>
+          </div>
+          <div class="hud-right">
+            <div class="stat-box">
+              <span class="stat-label">STRIKE RATE</span>
+              <span id="strike-rate" class="stat-value">0.0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">HIGH SCORE</span>
+              <span id="high-score" class="stat-value">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- Shot Feedback -->
+        <div id="shot-feedback" class="shot-feedback"></div>
+
+        <!-- Controls Hint -->
+        <div class="controls-hint">
+          <span><kbd>SPACE</kbd> Hit</span>
+          <span><kbd>A</kbd> Loft</span>
+          <span><kbd>S</kbd> Defend</span>
+          <span><kbd>D</kbd> Drive</span>
+        </div>
+      </div>
+
+      <!-- Game Over Screen -->
+      <div id="game-over-screen" class="screen">
+        <div class="result-container">
+          <h1 id="result-title" class="result-title">OUT!</h1>
+          <div class="final-stats">
+            <div class="final-stat">
+              <span class="final-label">Final Score</span>
+              <span id="final-score" class="final-value">0</span>
+            </div>
+            <div class="final-stat">
+              <span class="final-label">Balls Faced</span>
+              <span id="final-balls" class="final-value">0</span>
+            </div>
+            <div class="final-stat">
+              <span class="final-label">Strike Rate</span>
+              <span id="final-strike-rate" class="final-value">0.0</span>
+            </div>
+            <div class="final-stat highlight">
+              <span class="final-label">Best Score</span>
+              <span id="final-high-score" class="final-value">0</span>
+            </div>
+          </div>
+          <div id="performance-comment" class="performance-comment"></div>
+          <div class="action-buttons">
+            <button id="restart-btn" class="action-btn primary">
+              PLAY AGAIN
+            </button>
+            <button id="menu-btn" class="action-btn secondary">
+              MAIN MENU
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pause Overlay -->
+      <div id="pause-overlay" class="pause-overlay">
+        <div class="pause-content">
+          <h2>PAUSED</h2>
+          <button id="resume-btn" class="action-btn primary">RESUME</button>
+          <button id="pause-menu-btn" class="action-btn secondary">
+            QUIT TO MENU
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="sound-hit" preload="auto">
+      <source
+        src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE"
+        type="audio/wav"
+      />
+    </audio>
+    <audio id="sound-cheer" preload="auto">
+      <source
+        src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE"
+        type="audio/wav"
+      />
+    </audio>
+    <audio id="sound-out" preload="auto">
+      <source
+        src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE"
+        type="audio/wav"
+      />
+    </audio>
+
+    <script src="style.js"></script>
+  </body>
+</html>
